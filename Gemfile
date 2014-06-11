@@ -11,7 +11,9 @@ gem 'sass-rails', '~> 4.0.0'
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'rspec-rails', '~> 2.99'
+  gem 'rspec-rails'
+  gem 'rspec-its'
+  gem 'rspec-activemodel-mocks'
   gem 'launchy' unless ENV['TRAVIS']
   gem 'byebug' unless ENV['TRAVIS']
   gem 'capybara'

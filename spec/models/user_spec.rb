@@ -47,15 +47,15 @@ describe User do
       @another_user.delete
     end
     it "should be able to follow another user" do
-      @user.following?(@another_user).should be_true
-      @another_user.following?(@user).should be_false
-      @another_user.followed_by?(@user).should be_true
-      @user.followed_by?(@another_user).should be_false
+      @user.following?(@another_user).should be_truthy
+      @another_user.following?(@user).should be_falsey
+      @another_user.followed_by?(@user).should be_truthy
+      @user.followed_by?(@another_user).should be_falsey
     end
     it "should be able to unfollow another user" do
       @user.stop_following(@another_user)
-      @user.following?(@another_user).should be_false
-      @another_user.followed_by?(@user).should be_false
+      @user.following?(@another_user).should be_falsey
+      @another_user.followed_by?(@user).should be_falsey
     end
   end
 

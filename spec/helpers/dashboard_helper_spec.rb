@@ -23,18 +23,18 @@ describe DashboardHelper do
   describe "#on_the_dashboard?" do
     it "should return false for controllers that aren't a part of the dashboard" do
       allow(helper).to receive(:params).and_return({ controller: "foo" })
-      expect(helper.on_the_dashboard?).to be_false
+      expect(helper.on_the_dashboard?).to be_falsey
     end
 
     it "should return true for controllers that are part of the dashboard" do
       allow(helper).to receive(:params).and_return({ controller: "my/files" })
-      expect(helper.on_the_dashboard?).to be_true
+      expect(helper.on_the_dashboard?).to be_truthy
       allow(helper).to receive(:params).and_return({ controller: "my/collections" })
-      expect(helper.on_the_dashboard?).to be_true
+      expect(helper.on_the_dashboard?).to be_truthy
       allow(helper).to receive(:params).and_return({ controller: "my/highlights" })
-      expect(helper.on_the_dashboard?).to be_true
+      expect(helper.on_the_dashboard?).to be_truthy
       allow(helper).to receive(:params).and_return({ controller: "my/shares" })
-      expect(helper.on_the_dashboard?).to be_true
+      expect(helper.on_the_dashboard?).to be_truthy
     end
   end
 

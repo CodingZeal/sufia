@@ -4,7 +4,7 @@ describe ActiveFedora::UnsavedDigitalObject do
   it "should have an ARK-style pid" do    
     @obj = ActiveFedora::UnsavedDigitalObject.new(ActiveFedora::Base, 'id')
     @obj.save
-    Sufia::IdService.valid?(@obj.pid).should be_true
+    Sufia::IdService.valid?(@obj.pid).should be_truthy
   end
   it "should not use Fedora's pid service" do
     ActiveFedora::RubydoraConnection.any_instance.should_receive(:nextid).never

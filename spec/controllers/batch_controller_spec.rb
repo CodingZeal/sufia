@@ -29,8 +29,8 @@ describe BatchController do
     end
     it "should not be editable" do
       ability = Ability.new(@user)
-      ability.can?(:edit, @file).should be_true
-      ability.can?(:edit, @file2).should be_false
+      ability.can?(:edit, @file).should be_truthy
+      ability.can?(:edit, @file2).should be_falsey
     end
     it "should enqueue a batch update job" do
       params = {'generic_file' => {'read_groups_string' => '', 'read_users_string' => 'archivist1, archivist2', 'tag' => ['']}, 'id' => @batch.pid, 'controller' => 'batch', 'action' => 'update'}
@@ -42,8 +42,8 @@ describe BatchController do
     it "should show flash messages" do
       post :update, id: @batch.pid, "generic_file" => {"read_groups_string" => "","read_users_string" => "archivist1, archivist2", "tag" => [""]}
       response.should redirect_to @routes.url_helpers.dashboard_files_path
-      flash[:notice].should_not be_nil
-      flash[:notice].should_not be_empty
+      expect(flash[:notice]).not_to be_nil
+      expect(flash[:notice]).not_to be_empty
       flash[:notice].should include("Your files are being processed")
     end
 

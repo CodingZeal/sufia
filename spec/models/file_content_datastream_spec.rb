@@ -78,17 +78,17 @@ describe FileContentDatastream do
     end
     it "should only return true when the datastream has actually changed" do
       @generic_file.add_file(File.open(fixture_path + '/world.png', 'rb'), 'content', 'world.png')
-      @generic_file.content.changed?.should be_true
+      @generic_file.content.changed?.should be_truthy
       @generic_file.save!
-      @generic_file.content.changed?.should be_false
+      @generic_file.content.changed?.should be_falsey
 
       # Add a thumbnail ds
       @generic_file.add_file(File.open(fixture_path + '/world.png'), 'thumbnail', 'world.png')
-      @generic_file.thumbnail.changed?.should be_true
-      @generic_file.content.changed?.should be_false
+      @generic_file.thumbnail.changed?.should be_truthy
+      @generic_file.content.changed?.should be_falsey
 
       retrieved_file = @generic_file.reload
-      retrieved_file.content.changed?.should be_false
+      retrieved_file.content.changed?.should be_falsey
     end
   end
 end

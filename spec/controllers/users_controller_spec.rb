@@ -128,7 +128,7 @@ describe UsersController do
       flash[:alert].should include("Permission denied: cannot access this page.")
     end
     it "should set an avatar and redirect to profile" do
-      @user.avatar?.should be_false
+      @user.avatar?.should be_falsey
       s1 = double('one')
       UserEditProfileEventJob.should_receive(:new).with(@user.user_key).and_return(s1)
       Sufia.queue.should_receive(:push).with(s1).once
@@ -136,7 +136,7 @@ describe UsersController do
       post :update, id: @user.user_key, user: { avatar: f }
       response.should redirect_to(@routes.url_helpers.profile_path(@user.to_param))
       flash[:notice].should include("Your profile has been updated")
-      User.find_by_user_key(@user.user_key).avatar?.should be_true
+      User.find_by_user_key(@user.user_key).avatar?.should be_truthy
     end
     it "should validate the content type of an avatar" do
       Sufia.queue.should_receive(:push).never
@@ -165,7 +165,7 @@ describe UsersController do
         post :update, id: @user.user_key, delete_avatar: true
         response.should redirect_to(@routes.url_helpers.profile_path(@user.to_param))
         flash[:notice].should include("Your profile has been updated")
-        User.find_by_user_key(@user.user_key).avatar?.should be_false
+        User.find_by_user_key(@user.user_key).avatar?.should be_falsey
       end
     end
     it "should refresh directory attributes" do
@@ -178,10 +178,10 @@ describe UsersController do
       flash[:notice].should include("Your profile has been updated")
     end
     it "should set an social handles" do
-      @user.twitter_handle.blank?.should be_true
-      @user.facebook_handle.blank?.should be_true
-      @user.googleplus_handle.blank?.should be_true
-      @user.linkedin_handle.blank?.should be_true
+      @user.twitter_handle.blank?.should be_truthy
+      @user.facebook_handle.blank?.should be_truthy
+      @user.googleplus_handle.blank?.should be_truthy
+      @user.linkedin_handle.blank?.should be_truthy
       post :update, id: @user.user_key, user: { twitter_handle: 'twit', facebook_handle: 'face', googleplus_handle: 'goo', linkedin_handle:"link" }
       response.should redirect_to(@routes.url_helpers.profile_path(@user.to_param))
       flash[:notice].should include("Your profile has been updated")
@@ -213,7 +213,7 @@ describe UsersController do
       @user.unfollow(@another_user) rescue nil
     end
     it "should follow another user if not already following, and log an event" do
-      @user.following?(@another_user).should be_false
+      @user.following?(@another_user).should be_falsey
       s1 = double('one')
       UserFollowEventJob.should_receive(:new).with(@user.user_key, @another_user.user_key).and_return(s1)
       Sufia.queue.should_receive(:push).with(s1).once
